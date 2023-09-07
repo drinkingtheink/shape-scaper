@@ -1,12 +1,18 @@
 <template>
   <div class="hello">
     <h1>Shape-Scaper</h1>
+    <Shaper/>
   </div>
 </template>
 
 <script>
+import Shaper from './Shaper.vue';
+
 export default {
   name: 'AppStage',
+  components: {
+    Shaper
+  },
   props: {
     msg: String
   }
