@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
     <h1>Shape-Scaper</h1>
+    <section class="settings">
+      <h2>Settings:</h2>
+    </section>
     <Shaper/>
   </div>
 </template>

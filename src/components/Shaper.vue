@@ -29,7 +29,7 @@ import Triangle from './shapes/Triangle.vue';
 
 const colorSet = ['#54478c', '#2c699a', '#0db39e', '#83e377', '#f29e4c'];
 
-const aniLength = 10000;
+// const aniLength = 10000;
 
 export default {
     name: 'Shaper',
@@ -43,18 +43,24 @@ export default {
             rectsCount: 0,
             createShapes: false,
             interval: null,
+            randomMode: true,
         }
     },
     components: {
         Circle,
         Triangle,
     },
+    props: {
+        triCount: Number,
+        circCount: Number,
+        rectCount: Number,
+    },
     mounted() {
         this.shapeUp();
 
-        this.interval = setInterval(() => {
-            this.shapeUp();
-        }, aniLength);
+        // this.interval = setInterval(() => {
+        //     this.shapeUp();
+        // }, aniLength);
     },
     watch: {
         createShapes() {
@@ -139,19 +145,19 @@ export default {
             this.rects = [];
             this.rectsCount = 0;
 
-            this.circlesCount = this.generateRandom(5, 8);
+            this.circlesCount = this.randomMode ? this.generateRandom(5, 8) : this.circCount;
 
             for (let i = 0; i < this.circlesCount; i++) {
                 this.circles.push(`circle-${i}`);
             }
 
-            this.trianglesCount = this.generateRandom(4, 10);
+            this.trianglesCount = this.randomMode ? this.generateRandom(4, 10) : this.triCount;
 
             for (let i = 0; i < this.trianglesCount; i++) {
                 this.triangles.push(`triangle-${i}`);
             }
 
-            this.rectsCount = this.generateRandom(0, 3);
+            this.rectsCount = this.randomMode ? this.generateRandom(0, 3) : this.rectCount;
 
             for (let i = 0; i < this.rectsCount; i++) {
                 this.rects.push(`rect-${i}`);
@@ -230,6 +236,7 @@ export default {
     }
 
     .timing-bar-wrapper {
+        display: none;
         width: 60px;
         padding: 4px;
         background-color: black;
