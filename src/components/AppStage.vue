@@ -4,19 +4,20 @@
     <section class="settings">
       <h2>Settings:</h2>
       <button @click="this.randomMode = !this.randomMode">{{ randomBtnText }}</button>
-      <div class="setting circle-count">
-        <label for="circle-count-input"># of Circles:</label>
-        <input value="10" id="circle-count-input" type="number" max="100" />
-      </div>
-      <div class="setting tri-count">
-        <label for="tri-count-input"># of Triangles:</label>
-        <input value="10" id="tri-count-input" type="number" max="100" />
-      </div>
-      <div class="setting rect-count">
-        <label for="rect-count-input"># of Rectangles:</label>
-        <input value="10" id="rext-count-input" type="number" max="100" />
-      </div>
-
+      <section v-show="!randomMode" class="non-random-config">
+        <div class="setting circle-count">
+          <label for="circle-count-input"># of Circles:</label>
+          <input v-model="circCount" id="circle-count-input" type="number" max="100" />
+        </div>
+        <div class="setting tri-count">
+          <label for="tri-count-input"># of Triangles:</label>
+          <input v-model="triCount" id="tri-count-input" type="number" max="100" />
+        </div>
+        <div class="setting rect-count">
+          <label for="rect-count-input"># of Rectangles:</label>
+          <input v-model="rectCount" id="rext-count-input" type="number" max="100" />
+        </div>
+      </section>
       <button @click="handleShapeButtonPress">Make the Shapes</button>
     </section>
     <Shaper
@@ -63,15 +64,38 @@ export default {
       }
     }
   },
+  mounted() {
+    this.initiateVals();
+  },
   computed: {
     randomBtnText() {
       return this.randomMode ? 'Control Shapes' : 'Randomize Shapes';
     }
   },
   methods: {
+    initiateVals() {
+      this.circCount = this.generateRandom(3, 12);
+      this.triCount = this.generateRandom(3, 12);
+      this.rectCount = this.generateRandom(3, 12);
+    },
     handleShapeButtonPress() {
       this.runShaper = true;
-    }
+    },
+    generateRandom(min = 0, max = 100) {
+      // find diff
+      let difference = max - min;
+
+      // generate random number 
+      let rand = Math.random();
+
+      // multiply with difference 
+      rand = Math.floor( rand * difference);
+
+      // add with min value 
+      rand = rand + min;
+
+      return rand;
+    },
   }
 }
 </script>
