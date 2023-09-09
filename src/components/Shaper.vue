@@ -29,7 +29,7 @@ import Triangle from './shapes/Triangle.vue';
 
 const colorSet = ['#54478c', '#2c699a', '#0db39e', '#83e377', '#f29e4c'];
 
-// const aniLength = 10000;
+const aniLength = 10000;
 
 export default {
     name: 'Shaper',
@@ -43,7 +43,6 @@ export default {
             rectsCount: 0,
             createShapes: false,
             interval: null,
-            randomMode: true,
         }
     },
     components: {
@@ -54,13 +53,17 @@ export default {
         triCount: Number,
         circCount: Number,
         rectCount: Number,
+        runShaper: Boolean,
+        randomMode: Boolean,
     },
     mounted() {
         this.shapeUp();
 
-        // this.interval = setInterval(() => {
-        //     this.shapeUp();
-        // }, aniLength);
+        if (this.randomMode) {
+            this.interval = setInterval(() => {
+                this.shapeUp();
+            }, aniLength);
+        }
     },
     watch: {
         createShapes() {
@@ -69,6 +72,9 @@ export default {
 
                 this.createShapes = false;
             }
+        },
+        runShaper() {
+            this.createShapes = true;
         }
     },
     methods: {
@@ -219,6 +225,7 @@ export default {
 }
 
 .shaper {
+    pointer-events: none;
     position: absolute;
     bottom: 0;
     width: 100%;
